@@ -11,7 +11,7 @@ services:
     environment:
       - REDIS_HOSTS=local:redis:6379
     ports:
-      - "4000:8081"
+      - 4000:8081
     depends_on:
       - redis
 
@@ -26,7 +26,7 @@ services:
   mongodb_ui:
     image: huggingface/mongoku
     ports:
-      - "3000:3100"
+      - 3000:3100
     environment:
       - MONGOKU_DEFAULT_HOST="root:root@mongodb:27017"
     depends_on:
@@ -45,11 +45,15 @@ services:
     depends_on:
       - redis
       - mongo
-  # app:
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - 8080:8080
-  #   depends_on:
-  #     - web
+
+  app:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: dev
+    volumes:
+      - ./frontend/:/app/
+    ports:
+      - 8081:8081
+    depends_on:
+      - web
