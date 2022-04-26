@@ -1,0 +1,55 @@
+services:
+  redis:
+    hostname: redis
+    image: redis:latest
+    ports:
+      - 6379:6379
+
+  redis_ui:
+    image: rediscommander/redis-commander
+    restart: always
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "4000:8081"
+    depends_on:
+      - redis
+
+  mongodb:
+    hostname: mongodb
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+
+  mongodb_ui:
+    image: huggingface/mongoku
+    ports:
+      - "3000:3100"
+    environment:
+      - MONGOKU_DEFAULT_HOST="root:root@mongodb:27017"
+    depends_on:
+      - mongodb
+
+  web:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8000
+    volumes:
+      - ./backend/:/app/
+    restart: always
+    tty: true
+    depends_on:
+      - redis
+      - mongo
+  # app:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - 8080:8080
+  #   depends_on:
+  #     - web
