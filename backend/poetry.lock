@@ -140,18 +140,6 @@ motor = ">=2.0"
 sanic = ">=21.3"
 
 [[package]]
-name = "sanic-redis"
-version = "0.3.0"
-description = "Adds redis support to sanic ."
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-aioredis = "*"
-sanic = "*"
-
-[[package]]
 name = "sanic-routing"
 version = "22.3.0"
 description = "Core routing component for Sanic"
@@ -199,7 +187,7 @@ python-versions = ">=3.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "0786d6ca1a3319450e5bfd029dbcc60a025dba7a8433846653d4b38d704244e3"
+content-hash = "4de4423893db60f5b236b8f97426954aa5b10fafa1b1834de7192448d19ddf20"
 
 [metadata.files]
 aiofiles = [
@@ -470,9 +458,6 @@ sanic-ext = [
 sanic-motor = [
     {file = "sanic-motor-0.6.0.tar.gz", hash = "sha256:c40fd4a767384d9934ca3effcb6121b30a35facc9be4fee27692c7a50f86f0ac"},
     {file = "sanic_motor-0.6.0-py3-none-any.whl", hash = "sha256:853da0bd15db509e5026368f5e0ec5fa21a33933da8828f36c84e6d2abf80900"},
-]
-sanic-redis = [
-    {file = "sanic-redis-0.3.0.tar.gz", hash = "sha256:054e7f409b41e60595f3a51f5322690eb327d610edcd9fbf200d2fe66efdf66f"},
 ]
 sanic-routing = [
     {file = "sanic-routing-22.3.0.tar.gz", hash = "sha256:fde5a7d4079794b585b9a2904accd0de5a70abf27c82d2658b40c551ef44f703"},
