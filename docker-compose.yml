@@ -53,7 +53,7 @@ services:
     tty: true
     depends_on:
       - redis
-      - mongo
+      - mongodb
 
   # app:
   #   build:
