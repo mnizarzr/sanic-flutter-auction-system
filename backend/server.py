@@ -1,11 +1,14 @@
 import logging
 import os
+from pprint import pprint
+
 import aioredis
 from sanic import Sanic
 from sanic.response import text
 from sanic_motor import BaseModel
 
 from config.app_config import AppConfig
+from routes import load_routes
 
 app = Sanic(__name__)
 
@@ -13,13 +16,14 @@ app.update_config(AppConfig)
 
 BaseModel.init_app(app)
 
+
 @app.get("/")
 async def hello_world(request):
     return text("Hello, world.")
 
 
 @app.before_server_start
-async def before_server_start(appop):
+async def before_server_start(app, loop):
     _redis_url = app.config.get("REDIS_URL")
     try:
         _redis = await aioredis.from_url(_redis_url)
@@ -31,9 +35,11 @@ async def before_server_start(appop):
 
 
 @app.after_server_stop
-async def after_server_stop():
+async def after_server_stop(app, loop):
     logging.info(f'[redis] closing connection')
     app.ctx.redis.close()
+
+load_routes(app)
 
 if __name__ == '__main__':
     app.run(debug=os.getenv("DEBUG", False),
